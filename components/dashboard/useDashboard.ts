@@ -1,6 +1,7 @@
 import { useState, useCallback, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import type { SerializedEvent, ViewMode } from '@/src/types/events'
+import { Importance } from '@prisma/client'
 import { deleteEvent } from '@/src/actions/events'
 
 export function useDashboard(initialEvents: SerializedEvent[]) {
@@ -9,7 +10,7 @@ export function useDashboard(initialEvents: SerializedEvent[]) {
 
   const [view, setView] = useState<ViewMode>('calendar')
   const [search, setSearch] = useState('')
-  const [importance, setImportance] = useState('ALL')
+  const [importance, setImportance] = useState<Importance | 'ALL'>('ALL')
 
   const [editEvent, setEditEvent] = useState<SerializedEvent | null>(null)
   const [defaultDate, setDefaultDate] = useState<string | undefined>()

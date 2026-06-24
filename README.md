@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EventFlow 📅
 
-## Getting Started
+EventFlow is a modern, full-stack event management application built with **Next.js 15+ (App Router)**. It provides a beautiful interface to schedule, view, and organize your events through both an interactive calendar and a list view.
 
-First, run the development server:
+## ✨ Features
+- **Secure Authentication**: NextAuth.js v5 with Google OAuth and Credentials providers.
+- **Database**: PostgreSQL (Neon Serverless) and Prisma ORM for seamless data management.
+- **Data Validation**: Strict payload validation using Zod.
+- **Modern UI**: Built with Material-UI (MUI v6) with a customized dark theme, glassmorphism elements, and smooth micro-animations.
+- **Interactive Calendar**: Custom-built calendar view to easily spot and manage events.
+- **Server Actions**: Leveraging Next.js Server Actions for robust server-side mutations.
 
+## 🚀 Getting Started
+
+### 1. Prerequisites
+Make sure you have Node.js 18+ installed.
+
+### 2. Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Environment Variables
+Create a `.env` file in the root directory and add the following variables:
+```env
+# Database (Neon PostgreSQL)
+DATABASE_URL="postgres://user:password@endpoint/dbname"
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# NextAuth Secret
+AUTH_SECRET="your-secret-key-here"
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Google OAuth (Optional)
+AUTH_GOOGLE_ID="your-google-client-id"
+AUTH_GOOGLE_SECRET="your-google-client-secret"
+```
 
-## Learn More
+### 4. Database Setup & Seeding
+Push the Prisma schema to your database and seed it with demo data:
+```bash
+npx prisma db push
+npx tsx prisma/seed.ts
+```
+The seed script will create a demo user account with multiple events.
+**Demo Login:**
+- Email: `demo@example.com`
+- Password: `password123`
 
-To learn more about Next.js, take a look at the following resources:
+### 5. Run the Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Tech Stack
+- **Framework**: Next.js (App Router, Server Actions)
+- **Styling & Components**: Material-UI (MUI), Emotion
+- **Database**: PostgreSQL (Neon), Prisma ORM
+- **Authentication**: NextAuth v5
+- **Validation**: Zod
