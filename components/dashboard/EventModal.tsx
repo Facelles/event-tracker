@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, MenuItem, Alert, CircularProgress } from '@mui/material'
 import { Importance } from '@prisma/client'
+import { EventSchema } from '@/src/lib/validations/event'
 import type { SerializedEvent } from '@/src/types/events'
 import { IMPORTANCE_LABELS } from '@/src/types/events'
 import { createEvent, updateEvent } from '@/src/actions/events'
@@ -54,19 +55,17 @@ export default function EventModal({ open, event, defaultDate, onClose, onSaved 
     setLoading(true)
     setError('')
 
-    if (!form.title.trim()) { setError('Title is required.'); setLoading(false); return }
-    if (!form.dateTime) { setError('Date and time are required.'); setLoading(false); return }
-
-    const payload = {
-      title: form.title.trim(),
-      description: form.description.trim() || undefined,
-      dateTime: new Date(form.dateTime),
-      importance: form.importance as Importance,
+    const parsed = EventSchema.safeParse(form)
+    
+    if (!parsed.success) {
+      setError(parsed.error.issues[0].message)
+      setLoading(false)
+      return
     }
 
     const res = event
-      ? await updateEvent(event.id, payload)
-      : await createEvent(payload)
+      ? await updateEvent(event.id, parsed.data)
+      : await createEvent(parsed.data)
 
     if (!res.success) setError(res.error)
     else { onSaved(); onClose() }

@@ -7,10 +7,10 @@ import type { ViewMode } from '@/src/types/events'
 
 interface Props {
   search: string
-  importance: string
+  importance: Importance | 'ALL'
   view: ViewMode
   onSearch: (v: string) => void
-  onImportance: (v: string) => void
+  onImportance: (v: Importance | 'ALL') => void
   onView: (v: ViewMode) => void
   onAdd: () => void
 }
@@ -35,7 +35,7 @@ export default function TopToolbar({ search, importance, view, onSearch, onImpor
           id="toolbar-importance"
           value={importance}
           label="Importance"
-          onChange={e => onImportance(e.target.value)}
+          onChange={e => onImportance(e.target.value as Importance | 'ALL')}
         >
           <MenuItem value="ALL">All</MenuItem>
           <MenuItem value={Importance.REGULAR}>Regular</MenuItem>
